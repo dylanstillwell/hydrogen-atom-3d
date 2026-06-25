@@ -1,8 +1,6 @@
-# Hydrogen Atom — GPU Glow Edition
+# Hydrogen Atom
 
-A real-time 3D visualization of the hydrogen atom's quantum states, rendered
-with OpenGL additive blending so the probability cloud looks like a glowing
-nebula rather than a plain scatter plot.
+A real-time 3D visualization of the hydrogen atom's quantum states.
 
 It's exact quantum mechanics, not a stylized approximation: hydrogen's
 analytic Schrödinger eigenstates
