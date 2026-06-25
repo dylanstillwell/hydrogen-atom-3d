@@ -1,27 +1,4 @@
 #!/usr/bin/env python3
-"""
-3D Hydrogen Atom — GPU glow edition
-====================================
-
-Same exact quantum mechanics as hydrogen_atom_3d.py — hydrogen's analytic
-Schrödinger eigenstates psi_nlm = R_nl(r) Y_lm(theta,phi) with exact
-time evolution  Psi(x,t) = sum_i c_i psi_i(x) exp(-i E_i t / hbar)  —
-but rendered with OpenGL additive blending: 28,000 glowing particles in
-a two-layer bloom (hot core + soft halo), so the probability cloud looks
-like a nebula instead of a scatter plot.
-
-  hue        = quantum phase arg(Psi)   (watch it rotate at E/hbar)
-  brightness = probability density |Psi|^2  (white-hot where dense)
-  shimmer    = Metropolis re-sampling — Heisenberg uncertainty, live
-
-Controls
-  1-9    choose state / superposition      space  pause time
-  + / -  faster / slower time              r      resample cloud
-  j      toggle quantum jitter             v      toggle camera orbit
-  q/esc  quit                              mouse  drag to orbit, wheel zoom
-Run:  python3 hydrogen_atom_glow.py
-"""
-
 import sys
 import math
 import numpy as np
