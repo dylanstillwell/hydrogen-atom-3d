@@ -65,6 +65,10 @@ python3 hydrogen_atom_glow.py
 8. `2p₁ + 3d₂` — circular states, an orbiting wave packet
 9. `3d₂ + 3d₋₂` — standing wave, 4-lobe interference pattern
 
+## Smoke test
+
+Renders three presets offscreen and saves PNG snapshots:
+
 ```bash
 python3 hydrogen_atom_glow.py --test
 ```
