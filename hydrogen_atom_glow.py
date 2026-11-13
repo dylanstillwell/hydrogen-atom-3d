@@ -59,9 +59,8 @@ class HydrogenState:
 
     def eval_components(self, x, y, z):
         r = np.sqrt(x * x + y * y + z * z)
-        with np.errstate(invalid="ignore", divide="ignore"):
-            theta = np.arccos(np.clip(np.divide(z, r, where=r > 0), -1.0, 1.0))
-        theta = np.where(r > 0, theta, 0.0)
+        cos_t = np.divide(z, r, out=np.ones_like(r), where=r > 0)
+        theta = np.arccos(np.clip(cos_t, -1.0, 1.0))
         phi = np.arctan2(y, x)
         out = np.empty((len(self.coeffs), x.size), dtype=complex)
         for i, (n, l, m) in enumerate(self.quantum_numbers):
@@ -267,9 +266,9 @@ class HydrogenGlowApp:
                 self.metropolis_step()
 
         psi = self.state.psi(self.comps, self.t)            # exact TDSE evolution
-        w = np.abs(psi) ** 2 / np.maximum(self.env, 1e-300)
-        b = np.clip(w / (np.percentile(w, 92) + 1e-300), 0.0, 1.0) ** 0.7
-        b = 0.03 + 0.97 * b
+        w = np.abs(psi) ** 2                                # probability density
+        b = np.clip(w / (np.percentile(w, 99) + 1e-300), 0.0, 1.0) ** 0.35
+        b = 0.08 + 0.92 * b
 
         hue = (np.angle(psi) + np.pi) / (2 * np.pi)
         sat = 1.0 - 0.25 * b ** 3                           # slight white-hot at peaks
@@ -279,7 +278,7 @@ class HydrogenGlowApp:
         halo_col[:, :3] = rgb * 0.085
         halo_col[:, 3] = 0.8
         core_col = np.empty_like(halo_col)
-        core_col[:, :3] = rgb * 0.75
+        core_col[:, :3] = rgb * 0.5
         core_col[:, 3] = 0.85
 
         self.halo.setData(pos=self.pts, color=halo_col, size=7.0 + 11.0 * b)
